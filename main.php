@@ -2,11 +2,26 @@
 /*
 Plugin Name: Magic Contact
 Plugin URI: http://hunk.com.mx
-Description: Another contact plugin, After enabling this plugin visit <a href="options-general.php?page=magic-contact.php">the options page</a> to configure code style.
+Description: is a simple and beatiful contact form for Wordpress, taking as it bases to <a href="http://theodin.co.uk/blog/ajax/contactable-jquery-plugin.html">Contactable</a> (jQuery Plugin) By <a href="http://theodin.co.uk/">Philip Beel</a>, After enabling this plugin visit <a href="options-general.php?page=magic-contact.php">the options page</a> to configure settings of sending mail.
 Version: 0.1
-Author: hunk
+Author: Hunk
 Author URI: http://hunk.com.mx
-License: A "Slug" license name e.g. GPL2
+
+Copyright 2010  Edgar G (email : ing.edgar@gmail.com)
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 register_activation_hook( dirname(__FILE__) . '/main.php', 'magic_contact_activate' );
