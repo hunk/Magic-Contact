@@ -11,7 +11,7 @@
 	  //validate the email address on the server side
 	  if(eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $emailAddr) ) {
 		  //if successful lets send the message
-		  $send = mail("<?php echo get_option('recipient_contact'); ?>", $subject, $contactMessage);
+			$send = wp_mail(get_option('recipient_contact'), $subject, $contactMessage);
 		  if($send){
 		    echo('success'); //return success callback
 	    }else{
