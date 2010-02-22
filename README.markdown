@@ -1,4 +1,4 @@
-# Magic Fields
+# Magic Contact
 * Authors: [Edgar Garcia](http://hunk.com.mx "Hunk")
 * Contributors: [Philip Beel](http://theodin.co.uk/ "Philip Beel")
 * Tested up to: Wordpress 2.9.2
