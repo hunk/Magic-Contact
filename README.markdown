@@ -7,7 +7,7 @@
 
 ## Description
 
-Magic Contact is a Contact WordPress plugin based in (http://theodin.co.uk/blog/ajax/contactable-jquery-plugin.html "Contactable") (jQuery Plugin) By Philip Beel.
+Magic Contact is a Contact WordPress plugin based in [Contactable](http://theodin.co.uk/blog/ajax/contactable-jquery-plugin.html "Contactable") (jQuery Plugin) By [Philip Beel](http://theodin.co.uk/ "Philip Beel").
 
 ## Installation 
 
