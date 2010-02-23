@@ -32,7 +32,7 @@
 		//act upon the element that is passed into the design    
 		return this.each(function(options) {
 			//construct the form
-			$(this).html('<div id="contactable"></div><form id="contactForm" method="" action=""><div id="loading"></div><div id="callback"></div><div class="holder"><p><label for="name">Name <span class="red"> * </span></label><br /><input id="name" class="contact" name="name" /></p><p><label for="email">E-Mail <span class="red"> * </span></label><br /><input id="email" class="contact" name="email" /></p><p><label for="email">Website <span class="red"> * </span></label><br /><input id="website" class="contact" name="url" /></p><p><label for="comment">Your Feedback <span class="red"> * </span></label><br /><textarea id="comment" name="comment" class="comment" rows="4" cols="30" ></textarea></p><p><input class="submit" type="submit" value="Send"/></p><p class="disclaimer">'+defaults.disclaimer+'</p></div></form>');
+			$(this).html('<div id="contactable"></div><form id="contactForm" method="" action=""><div id="loading"></div><div id="callback"></div><div class="holder"><p><label for="name">Name <span class="red"> * </span></label><br /><input id="name_mc" class="contact" name="name" /></p><p><label for="email">E-Mail <span class="red"> * </span></label><br /><input id="email_mc" class="contact" name="email" /></p><p><label for="email">Website <span class="red"> * </span></label><br /><input id="website_mc" class="contact" name="url" /></p><p><label for="comment">Your Feedback <span class="red"> * </span></label><br /><textarea id="comment_mc" name="comment" class="comment" rows="4" cols="30" ></textarea></p><p><input class="submit" type="submit" value="Send"/></p><p class="disclaimer">'+defaults.disclaimer+'</p></div></form>');
 			//show / hide function
 			$('div#contactable').toggle(function() {
 				$('#overlay').css({display: 'block'});
@@ -78,7 +78,7 @@
 				submitHandler: function() {
 					$('.holder').hide();
 					$('#loading').show();
-					$.post(defaults.fileMail,{subject:defaults.subject, name:$('#contactForm #name').val(), email:$('#contactForm #email').val(), website:$('#contactForm #website').val(), comment:$('#contactForm #comment').val()},
+					$.post(defaults.fileMail,{subject:defaults.subject, name:$('#contactForm #name_mc').val(), email:$('#contactForm #email_mc').val(), website:$('#contactForm #website_mc').val(), comment:$('#contactForm #comment_mc').val()},
 					function(data){
 						$('#loading').css({display:'none'}); 
 						if( data == 'success') {
