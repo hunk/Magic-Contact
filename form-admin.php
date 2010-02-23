@@ -6,7 +6,7 @@
   <h2><?php _e('Magic Contact Configuration'); ?></h2>
   <div class="narrow magic_contact">
     <form action="" method="post" id="akismet-conf" style="margin: auto; width: 600px; ">
-      <p><?php printf(__('Para que Magic contact funcione correctamete es necesario algunos datos de configuracion')); ?></p>
+      <p><?php printf(__('For the correct operation of Magic Contact is necessary to verify some information')); ?></p>
 
       <div class="contactleft">
         <label for="recipient_contact"><?php _e('Recipient of the email'); ?></label>
