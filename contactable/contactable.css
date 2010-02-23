@@ -1,7 +1,5 @@
 /* theodin.co.uk -Designed and developed by Philip Beel All Rights Reserved*/
 
-/* 
-------------------------------------------------------------------------------------------------------Genetic--------------*/
 #contactable {
 	background-image:url(images/contact.png);
 	color:#FFFFFF;
@@ -101,12 +99,7 @@ form#contactForm .disclaimer {
 	width:100%;
 	z-index:0;
 } 
-.error { background-color: #EDBE9C; }
-
-#name.error { background-color: #EDBE9C; } 
-#email.error { background-color: #EDBE9C; }
-#comment.error { background-color: #EDBE9C; }
-#website.error { background-color: #EDBE9C; }
+form#contactForm .error { background-color: #EDBE9C; }
 
 form#contactForm label{
 	*margin-left:20px;
