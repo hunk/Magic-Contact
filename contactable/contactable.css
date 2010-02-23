@@ -99,6 +99,7 @@ form#contactForm .disclaimer {
 #name.error { background-color: #EDBE9C; } 
 #email.error { background-color: #EDBE9C; }
 #comment.error { background-color: #EDBE9C; }
+#website.error { background-color: #EDBE9C; }
 
 form#contactForm label{
 	*margin-left:20px;
