@@ -3,11 +3,11 @@
 * Contributors: [Philip Beel](http://theodin.co.uk/ "Philip Beel")
 * Tested up to: Wordpress 2.9.2
 * Stable tag: 0.1
-* Description: Magic Contact is a Simple and beatiful contact form for Wordpress, taking as it bases to [Contactable](http://theodin.co.uk/blog/ajax/contactable-jquery-plugin.html "Contactable") (jQuery Plugin) By [Philip Beel](http://theodin.co.uk/ "Philip Beel").
+* Description: Magic Contact is a Simple and Elegant contact form for Wordpress, taking as it bases to [Contactable](http://theodin.co.uk/blog/ajax/contactable-jquery-plugin.html "Contactable") (jQuery Plugin) By [Philip Beel](http://theodin.co.uk/ "Philip Beel").
 
 ## Description
 
-Magic Contact is a simple and beatiful contact form for Wordpress, taking as it bases to [Contactable](http://theodin.co.uk/blog/ajax/contactable-jquery-plugin.html "Contactable") (jQuery Plugin) By [Philip Beel](http://theodin.co.uk/ "Philip Beel").
+Magic Contact is a simple and Elegant contact form for Wordpress, taking as it bases to [Contactable](http://theodin.co.uk/blog/ajax/contactable-jquery-plugin.html "Contactable") (jQuery Plugin) By [Philip Beel](http://theodin.co.uk/ "Philip Beel").
 
 ## Installation 
 

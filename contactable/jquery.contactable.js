@@ -20,9 +20,16 @@
 			email: 'Email',
 			message : 'Message',
 			subject : 'A contactable message',
+			label_name: 'Name',
+      label_email: 'E-Mail',
+      label_website: 'Website',
+      label_feedback: 'Your Feedback',
+      label_send: 'SEND',
 			recievedMsg : 'Thankyou for your message',
 			notRecievedMsg : 'Sorry but your message could not be sent, try again later',
 			disclaimer: 'Please feel free to get in touch, we value your feedback',
+			hide_email: 'false',
+      hide_website: 'false',
 			fileMail: 'mail.php',
 			hideOnSubmit: true
 		};
@@ -32,7 +39,19 @@
 		//act upon the element that is passed into the design    
 		return this.each(function(options) {
 			//construct the form
-			$(this).html('<div id="contactable"></div><form id="contactForm" method="" action=""><div id="loading"></div><div id="callback"></div><div class="holder"><p><label for="name">Name <span class="red"> * </span></label><br /><input id="name_mc" class="contact" name="name" /></p><p><label for="email">E-Mail <span class="red"> * </span></label><br /><input id="email_mc" class="contact" name="email" /></p><p><label for="email">Website <span class="red"> * </span></label><br /><input id="website_mc" class="contact" name="url" /></p><p><label for="comment">Your Feedback <span class="red"> * </span></label><br /><textarea id="comment_mc" name="comment" class="comment" rows="4" cols="30" ></textarea></p><p><input class="submit" type="submit" value="Send"/></p><p class="disclaimer">'+defaults.disclaimer+'</p></div></form>');
+			div_form = '<div id="contactable"></div><form id="contactForm" method="" action=""><div id="loading"></div><div id="callback"></div><div class="holder">';
+			div_form += '<p><label for="name">'+defaults.label_name+' <span class="red"> * </span></label><br /><input id="name_mc" class="contact" name="name" /></p>';
+			if(defaults.hide_email == 'false'){
+			  div_form += '<p><label for="email">'+defaults.label_email+' <span class="red"> * </span></label><br /><input id="email_mc" class="contact" name="email" /></p>';
+		  }
+		  if(defaults.hide_website == 'false'){
+			  div_form += '<p><label for="email">'+defaults.label_website+' <span class="red"> * </span></label><br /><input id="website_mc" class="contact" name="url" /></p>';
+		  }
+			div_form += '<p><label for="comment">'+defaults.label_feedback+' <span class="red"> * </span></label><br /><textarea id="comment_mc" name="comment" class="comment" rows="4" cols="30" ></textarea></p>';
+			div_form += '<p><input class="submit" type="submit" value="'+defaults.label_send+'"/></p>';
+			div_form += '<p class="disclaimer">'+defaults.disclaimer+'</p></div></form>';
+			
+			$(this).html(div_form);
 			//show / hide function
 			$('div#contactable').toggle(function() {
 				$('#overlay').css({display: 'block'});
@@ -78,7 +97,13 @@
 				submitHandler: function() {
 					$('.holder').hide();
 					$('#loading').show();
-					$.post(defaults.fileMail,{subject:defaults.subject, name:$('#contactForm #name_mc').val(), email:$('#contactForm #email_mc').val(), website:$('#contactForm #website_mc').val(), comment:$('#contactForm #comment_mc').val()},
+					name_val = $('#contactForm #name_mc').val();
+					if(defaults.hide_email == 'false') email_val = $('#contactForm #email_mc').val();
+					else email_val = 'nothing';
+					if(defaults.hide_website == 'false') website_val = $('#contactForm #website_mc').val();
+					else website_val = 'nothing';
+					comment_val = $('#contactForm #comment_mc').val();
+					$.post(defaults.fileMail,{subject:defaults.subject, name: name_val, email: email_val, website: website_val, comment:comment_val},
 					function(data){
 						$('#loading').css({display:'none'}); 
 						if( data == 'success') {

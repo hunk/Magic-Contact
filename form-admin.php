@@ -6,8 +6,11 @@
   <h2><?php _e('Magic Contact Configuration'); ?></h2>
   <div class="narrow magic_contact">
     <form action="" method="post" id="akismet-conf" style="margin: auto; width: 600px; ">
+      
       <p><?php printf(__('For the correct operation of Magic Contact is necessary to verify some information')); ?></p>
 
+      <p><h3>Settings mail</h3></p>
+      
       <div class="contactleft">
         <label for="recipient_contact"><?php _e('Recipient of the email'); ?></label>
       </div>
@@ -21,10 +24,56 @@
       <div class="contactright">
         <input id="subject_contact" name="subject_contact" type="text" class="magic_contact" value="<?php echo get_option('subject_contact'); ?>" />
       </div>
-
+      
+      
+      <div class="clear"></div>
+      <p><h3>Settings contact form</h3></p>
+      
+      
+      <div class="contactleft">
+        <label for="label_name_contact"><?php _e('Label for name'); ?></label>
+      </div>
+      
+      <div class="contactright">
+        <input id="label_name_contact" name="label_name_contact" type="text" class="magic_contact" value="<?php echo get_option('label_name_contact'); ?>" />
+      </div>
+      
+      <div class="contactleft">
+        <label for="label_email_contact"><?php _e('Label for Email'); ?></label>
+      </div>
+      
+      <div class="contactright">
+        <input id="label_email_contact" name="label_email_contact" type="text" class="magic_contact" value="<?php echo get_option('label_email_contact'); ?>" />
+      </div>
+      
+      <div class="contactleft">
+        <label for="label_website_contact"><?php _e('Label for Website'); ?></label>
+      </div>
+      
+      <div class="contactright">
+        <input id="label_website_contact" name="label_website_contact" type="text" class="magic_contact" value="<?php echo get_option('label_website_contact'); ?>" />
+      </div>
+      
+      <div class="contactleft">
+        <label for="label_feedback_contact"><?php _e('Label for Feedback'); ?></label>
+      </div>
+      
+      <div class="contactright">
+        <input id="label_feedback_contact" name="label_feedback_contact" type="text" class="magic_contact" value="<?php echo get_option('label_feedback_contact'); ?>" />
+      </div>
+      
+      <div class="contactleft">
+        <label for="label_send_contact"><?php _e('Label for button (send)'); ?></label>
+      </div>
+      
+      <div class="contactright">
+        <input id="label_send_contact" name="label_send_contact" type="text" class="magic_contact" value="<?php echo get_option('label_send_contact'); ?>" />
+      </div>
+      
       <div class="contactleft">
         <label for="recievedMsg_contact"><?php _e('Recieved message'); ?></label>
       </div>
+        
       <div class="contactright">
         <input id="recievedMsg_contact" name="recievedMsg_contact" type="text" class="magic_contact" value="<?php echo get_option('recievedMsg_contact'); ?>" />
       </div>
@@ -32,6 +81,7 @@
       <div class="contactleft">
         <label for="notRecievedMsg_contact"><?php _e('Not recieved messsage'); ?></label>
       </div>
+        
       <div class="contactright">
         <input id="notRecievedMsg_contact" name="notRecievedMsg_contact" type="text" class="magic_contact" value="<?php echo get_option('notRecievedMsg_contact'); ?>" />
       </div>
@@ -39,10 +89,30 @@
       <div class="contactleft">
         <label for="disclaimer_contact"><?php _e('disclaimer'); ?></label>
       </div>
+
       <div class="contactright">
         <input id="disclaimer_contact" name="disclaimer_contact" type="text" class="magic_contact" value="<?php echo get_option('disclaimer_contact'); ?>" />
       </div>
+      
+      <div class="clear"></div>
+      <p><h3>Hide fields form</h3></p>
+      
+      <div class="contactleft">
+        <label for="hide_email_contact"><?php _e('Hide Email field'); ?></label>
+      </div>
 
+      <div class="contactright">
+        <input name="hide_email_contact" id="hide_email_contact" value="true" type="checkbox" <?php if ( get_option('hide_email_contact') == 'true' ) echo ' checked="checked" '; ?>
+      </div>
+      
+      <div class="contactleft">
+        <label for="hide_website_contact"><?php _e('Hide website field'); ?></label>
+      </div>
+
+      <div class="contactright">
+        <input name="hide_website_contact" id="hide_website_contact" value="true" type="checkbox" <?php if ( get_option('hide_website_contact') == 'true' ) echo ' checked="checked" '; ?>
+      </div>
+      
 	    <div class="contactright">
 	      <input type="submit" name="submit" value="<?php _e('Update options &raquo;'); ?>" />
 	    </div>
