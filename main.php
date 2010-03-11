@@ -43,6 +43,8 @@ function magic_contact_activate(){
     update_option( 'hide_email_contact', 'false' );
     update_option( 'hide_website_contact', 'false' );
     
+    update_option( 'side_contact', 'left' );
+    
     update_option( 'init_contact', 1 );
  }
 }
@@ -83,6 +85,8 @@ function magic_contact_menu(){
   	
   	if ( isset( $_POST['hide_email_contact'] ) ) update_option( 'hide_email_contact', 'true' ); else update_option( 'hide_email_contact', 'false' );
 		if ( isset( $_POST['hide_website_contact'] ) ) update_option( 'hide_website_contact', 'true' ); else update_option( 'hide_website_contact', 'false' );
+    
+    update_option( 'side_contact', $_POST['side_contact'] );
     
   }
   include 'form-admin.php';

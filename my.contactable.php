@@ -20,6 +20,7 @@ jQuery(document).ready( function($){
         disclaimer: '<?php echo get_option('disclaimer_contact'); ?>',
         hide_email: '<?php echo get_option('hide_email_contact'); ?>',
         hide_website: '<?php echo get_option('hide_website_contact'); ?>',
+        side: '<?php echo get_option('side_contact'); ?>',
         fileMail : '<?php echo WP_PLUGIN_URL.'/'.str_replace(basename( __FILE__),"",plugin_basename(__FILE__))."contactable/mail.php";?>'
     });
 });

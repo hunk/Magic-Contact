@@ -31,6 +31,7 @@
 			hide_email: 'false',
       hide_website: 'false',
 			fileMail: 'mail.php',
+			side: 'left',
 			hideOnSubmit: true
 		};
 
@@ -39,7 +40,10 @@
 		//act upon the element that is passed into the design    
 		return this.each(function(options) {
 			//construct the form
-			div_form = '<div id="contactable"></div><form id="contactForm" method="" action=""><div id="loading"></div><div id="callback"></div><div class="holder">';
+			conf_side = "class='contactable_l'";
+			if(defaults.side == "right") conf_side = "class='contactable_r'"; 
+			
+			div_form = '<div id="contactable" '+conf_side+' ></div><form '+conf_side+' id="contactForm" method="" action=""><div id="loading"></div><div id="callback"></div><div class="holder">';
 			div_form += '<p><label for="name">'+defaults.label_name+' <span class="red"> * </span></label><br /><input id="name_mc" class="contact" name="name" /></p>';
 			if(defaults.hide_email == 'false'){
 			  div_form += '<p><label for="email">'+defaults.label_email+' <span class="red"> * </span></label><br /><input id="email_mc" class="contact" name="email" /></p>';
@@ -55,14 +59,26 @@
 			//show / hide function
 			$('div#contactable').toggle(function() {
 				$('#overlay').css({display: 'block'});
-				$(this).animate({"marginLeft": "-=5px"}, "fast"); 
-				$('#contactForm').animate({"marginLeft": "-=0px"}, "fast");
-				$(this).animate({"marginLeft": "+=387px"}, "slow"); 
-				$('#contactForm').animate({"marginLeft": "+=390px"}, "slow"); 
+				if(defaults.side == "right"){
+				  $(this).animate({"marginRight": "-=5px"}, "fast"); 
+				  $('#contactForm').animate({"marginRight": "-=0px"}, "fast");
+				  $(this).animate({"marginRight": "+=387px"}, "slow"); 
+				  $('#contactForm').animate({"marginRight": "+=390px"}, "slow");
+		    }else{
+		      $(this).animate({"marginLeft": "-=5px"}, "fast"); 
+  				$('#contactForm').animate({"marginLeft": "-=0px"}, "fast");
+  				$(this).animate({"marginLeft": "+=387px"}, "slow"); 
+  				$('#contactForm').animate({"marginLeft": "+=390px"}, "slow");
+		    }
 			}, 
 			function() {
-				$('#contactForm').animate({"marginLeft": "-=390px"}, "slow");
-				$(this).animate({"marginLeft": "-=387px"}, "slow").animate({"marginLeft": "+=5px"}, "fast"); 
+			  if(defaults.side == "right"){
+				  $('#contactForm').animate({"marginRight": "-=390px"}, "slow");
+				  $(this).animate({"marginRight": "-=387px"}, "slow").animate({"marginRight": "+=5px"}, "fast"); 
+				}else{
+				  $('#contactForm').animate({"marginLeft": "-=390px"}, "slow");
+				  $(this).animate({"marginLeft": "-=387px"}, "slow").animate({"marginLeft": "+=5px"}, "fast");
+				}
 				$('#overlay').css({display: 'none'});
 			});
 			
@@ -110,8 +126,13 @@
 							$('#callback').show().append(defaults.recievedMsg);
 							if(defaults.hideOnSubmit == true) {
 								//hide the tab after successful submition if requested
-								$('#contactForm').animate({dummy:1}, 2000).animate({"marginLeft": "-=450px"}, "slow");
-								$('div#contactable').animate({dummy:1}, 2000).animate({"marginLeft": "-=447px"}, "slow").animate({"marginLeft": "+=5px"}, "fast"); 
+								if(defaults.side == "right"){
+								  $('#contactForm').animate({dummy:1}, 2000).animate({"marginRight": "-=450px"}, "slow");
+								  $('div#contactable').animate({dummy:1}, 2000).animate({"marginRight": "-=447px"}, "slow").animate({"marginRight": "+=5px"}, "fast"); 
+								}else{
+								  $('#contactForm').animate({dummy:1}, 2000).animate({"marginLeft": "-=450px"}, "slow");
+								  $('div#contactable').animate({dummy:1}, 2000).animate({"marginLeft": "-=447px"}, "slow").animate({"marginLeft": "+=5px"}, "fast");
+								}
 								$('#overlay').css({display: 'none'});	
 							}
 						} else {
@@ -123,4 +144,3 @@
 		});
 	};
 })(jQuery);
-

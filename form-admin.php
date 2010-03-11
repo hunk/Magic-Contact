@@ -113,6 +113,20 @@
         <input name="hide_website_contact" id="hide_website_contact" value="true" type="checkbox" <?php if ( get_option('hide_website_contact') == 'true' ) echo ' checked="checked" '; ?>
       </div>
       
+      <div class="clear"></div>
+      <p><h3>Side form</h3></p>
+      
+      <div class="contactleft">
+        <label for="side_contact"><?php _e('Side Contact Form'); ?></label>
+      </div>
+      
+      <div class="side_contact">
+        <select name="side_contact" id="side_contact" >
+          <option <?php if(get_option('side_contact') == 'left'){ echo 'selected="selected"'; } ?> value="left">Left</option>
+          <option <?php if(get_option('side_contact') == 'right'){ echo 'selected="selected"'; } ?> value="right">Right</option>
+        </select>
+      </div>
+      
 	    <div class="contactright">
 	      <input type="submit" name="submit" value="<?php _e('Update options &raquo;'); ?>" />
 	    </div>

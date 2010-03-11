@@ -1,14 +1,10 @@
 /* theodin.co.uk -Designed and developed by Philip Beel All Rights Reserved*/
 
 #contactable {
-	background-image:url(images/contact.png);
 	color:#FFFFFF;
 	background-color:#333333;
 	cursor:pointer;
 	height:102px;
-	left:0;
-	margin-left:-5px; 
-	*margin-left:-5px; 
 	overflow:hidden;
 	position:fixed;
 	*position:absolute;
@@ -19,14 +15,26 @@
 	z-index:100000;
 }
 
+div.contactable_l{
+  background-image:url(images/contact.png);
+  left:0;
+  margin-left:-5px; 
+	*margin-left:-5px;
+}
+div.contactable_r{
+  background-image:url(images/contact_right.png);
+  right:0;
+  margin-right:-5px; 
+	*margin-right:-5px;
+}
+
 #contactForm {
 	background-color:#333333;
 	border:2px solid #FFFFFF;
 	color:#FFFFFF;
 	height:450px;
-	left:0;
-	margin-left:-400px;
-	*margin-left:-434px;
+	
+	
 	margin-top:-160px;
 	overflow:hidden;
 	padding-left:30px;
@@ -35,6 +43,17 @@
 	width:360px;
 	*width:394px;
 	z-index:99;
+}
+
+form.contactable_l{
+  left:0;
+  margin-left:-400px;
+	*margin-left:-434px;
+}
+form.contactable_r{
+  right:0;
+  margin-right:-400px;
+	*margin-right:-434px;
 }
 
 form#contactForm input, form#contactForm textarea {
