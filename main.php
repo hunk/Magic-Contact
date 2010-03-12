@@ -34,7 +34,7 @@ function magic_contact_activate(){
     update_option( 'label_name_contact', 'Name' );
     update_option( 'label_email_contact', 'E-Mail' );
     update_option( 'label_website_contact', 'Website' );
-    update_option( 'label_feedback_contact', 'You Feedback' );
+    update_option( 'label_feedback_contact', 'Your Feedback' );
     update_option( 'label_send_contact', 'SEND' );
     update_option( 'recievedMsg_contact', 'Thank you for your message' );
     update_option( 'notRecievedMsg_contact', 'Sorry, your message could not be sent, try again later' );
