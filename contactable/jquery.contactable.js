@@ -122,6 +122,7 @@
 					$.post(defaults.fileMail,{subject:defaults.subject, name: name_val, email: email_val, website: website_val, comment:comment_val},
 					function(data){
 						$('#loading').css({display:'none'}); 
+						data = jQuery.trim(data);
 						if( data == 'success') {
 							$('#callback').show().append(defaults.recievedMsg);
 							if(defaults.hideOnSubmit == true) {
