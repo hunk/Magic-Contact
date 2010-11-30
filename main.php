@@ -2,9 +2,9 @@
 /*
 Plugin Name: Magic Contact
 Plugin URI: http://blog.hunk.com.mx/magic-contact/
-Description: is a simple and Elegant contact form for Wordpress, taking as it bases to <a href="http://theodin.co.uk/blog/ajax/contactable-jquery-plugin.html">Contactable</a> (jQuery Plugin) By <a href="http://theodin.co.uk/">Philip Beel</a>, After enabling this plugin visit <a href="options-general.php?page=magic-contact.php">the options page</a> to configure settings of sending mail.
-Version: 0.1
-Author: Hunk
+Description: is a simple and Elegant contact form for Wordpress, taking as it bases to <a href="http://theodin.co.uk/blog/ajax/contactable-jquery-plugin.html">Contactable</a> (jQuery Plugin) By <a href="http://theodin.co.uk/">Philip Beel</a>, After enabling this plugin visit <a href="options-general.php?page=magic-contact.php">the options page</a> to configure settings of sending mail. Please update your settings after upgrading the plugin.
+Version: 0.2
+Author: Hunk, John Bloch
 Author URI: http://hunk.com.mx
 
 Copyright 2010  Edgar G (email : ing.edgar@gmail.com)
@@ -24,91 +24,165 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-register_activation_hook( dirname(__FILE__) . '/main.php', 'magic_contact_activate' );
 
-function magic_contact_activate(){
-  if(!get_option('init_contact')){
-    update_option( 'recipient_contact', get_bloginfo('admin_email') );
-    update_option( 'subject_contact', 'A contactable message' );
-    
-    update_option( 'label_name_contact', 'Name' );
-    update_option( 'label_email_contact', 'E-Mail' );
-    update_option( 'label_website_contact', 'Website' );
-    update_option( 'label_feedback_contact', 'Your Feedback' );
-    update_option( 'label_send_contact', 'SEND' );
-    update_option( 'recievedMsg_contact', 'Thank you for your message' );
-    update_option( 'notRecievedMsg_contact', 'Sorry, your message could not be sent, try again later' );
-    update_option( 'disclaimer_contact', 'Please feel free to get in touch, we value your feedback' );
-    
-    update_option( 'hide_email_contact', 'false' );
-    update_option( 'hide_website_contact', 'false' );
-    
-    update_option( 'side_contact', 'left' );
-    
-    update_option( 'init_contact', 1 );
- }
+class Magic_Contact {
+
+	var $options = array();
+	
+	var $version = 0;
+	
+	function __construct(){
+		add_action('plugin_action_links_' . plugin_basename(__FILE__), array( &$this, 'AddPluginActions' ) );
+		add_action('admin_menu', array( &$this, 'mc_admin_actions' ) );
+		add_action('template_redirect', array( &$this, 'script_magic_contact' ) );
+		add_action('wp_footer', array( &$this, 'div_magic_contact' ) );
+		add_action('wp_ajax_magic_contact_ajax', array(&$this,'magic_contact_ajax'));
+		add_action('wp_ajax_nopriv_magic_contact_ajax', array(&$this,'magic_contact_ajax'));
+		$this->options = get_option( 'magic_contact_options', array() );
+		$this->version = get_option( 'magic_contact_version', 0);
+		if( 0 !== version_compare('0.2', (string)$this->version) )
+			$this->magic_contact_option_update();
+	}
+
+	function magic_contact_option_update(){
+		$defaults = array(
+			'recipient_contact'       => get_bloginfo('admin_email'),
+			'subject_contact'         => 'A contactable message',
+			'label_name_contact'      => 'Name',
+			'label_email_contact'     => 'E-Mail',
+			'label_website_contact'   => 'Website',
+			'label_feedback_contact'  => 'You Feedback',
+			'label_send_contact'      => 'SEND',
+			'recievedMsg_contact'     => 'Thank you for your message',
+			'notRecievedMsg_contact'  => 'Sorry, your message could not be sent, try again later',
+			'disclaimer_contact'      => 'Please feel free to get in touch, we value your feedback',
+			'hide_email_contact'      => false,
+			'hide_website_contact'    => false,
+			'side_contact'            => 'left'
+		);
+		if(empty($this->options)){
+			foreach($defaults as $key => $value){
+				$old = get_option( $key );
+				if(!empty($old) && 0 !== strpos($old, 'hide_'))
+					$this->options[$key] = $old;
+				elseif(!empty($old))
+					$this->options[$key] = $old == 'true' ? true : false;
+			}
+		}
+		$this->options = array_merge($this->options, $defaults);
+		update_option('magic_contact_options', $this->options);
+		update_option( 'magic_contact_version', 0.2 );
+	}
+	
+	function AddPluginActions($links) {
+		$new_links = array('<a href="options-general.php?page=magic-contact.php">' . __('Settings') . '</a>');
+		return array_merge($new_links, $links);
+	}
+	
+	
+	function mc_admin_actions(){
+		add_options_page("Magic Contact", "Magic Contact", 'manage_options',"magic-contact.php", array(&$this,"magic_contact_menu"));
+	}
+	
+	function magic_contact_menu(){   
+		if ( isset($_POST['submit']) ) {
+			if ( !function_exists('current_user_can') || !current_user_can('manage_options') )
+				die(__('Cheatin&#8217; uh?'));
+
+			if(!empty($_POST['magic_contact'])){
+				$mc = $_POST['magic_contact'];
+				$nv = array();
+				$nv['recipient_contact'] = isset($mc['recipient_contact']) ? $mc['recipient_contact'] : $this->options['recipient_contact'];
+				$nv['subject_contact'] = isset($mc['subject_contact']) ? $mc['subject_contact'] : $this->options['subject_contact'];
+				$nv['label_name_contact'] = isset($mc['label_name_contact']) ? $mc['label_name_contact'] : $this->options['label_name_contact'];
+				$nv['label_email_contact'] = isset($mc['label_email_contact']) ? $mc['label_email_contact'] : $this->options['label_email_contact'];
+				$nv['label_website_contact'] = isset($mc['label_website_contact']) ? $mc['label_website_contact'] : $this->options['label_website_contact'];
+				$nv['label_feedback_contact'] = isset($mc['label_feedback_contact']) ? $mc['label_feedback_contact'] : $this->options['label_feedback_contact'];
+				$nv['label_send_contact'] = isset($mc['label_send_contact']) ? $mc['label_send_contact'] : $this->options['label_send_contact'];
+				$nv['recievedMsg_contact'] = isset($mc['recievedMsg_contact']) ? $mc['recievedMsg_contact'] : $this->options['recievedMsg_contact'];
+				$nv['notRecievedMsg_contact'] = isset($mc['notRecievedMsg_contact']) ? $mc['notRecievedMsg_contact'] : $this->options['notRecievedMsg_contact'];
+				$nv['disclaimer_contact'] = isset($mc['disclaimer_contact']) ? $mc['disclaimer_contact'] : $this->options['disclaimer_contact'];
+				$nv['hide_email_contact'] = isset($mc['hide_email_contact']) ? true : false;
+				$nv['hide_website_contact'] = isset($mc['hide_website_contact']) ? true : false;
+				$nv['side_contact'] = isset($mc['side_contact']) ? $mc['side_contact'] : $this->options['side_contact'];
+				$this->options = array_merge($this->options, $nv);
+				update_option( 'magic_contact_options', $this->options );
+			}
+			
+		}
+		include_once(dirname(__FILE__).'/form-admin.php');
+	}
+	
+	
+	function script_magic_contact(){
+		$base = trailingslashit(plugins_url('',__FILE__)); 
+		wp_enqueue_script( 'jquery.contactable', $base . 'contactable/jquery.contactable.js', array('jquery') , 3.1);
+		wp_enqueue_script( 'jquery.validate', $base . 'contactable/jquery.validate.pack.js', array('jquery') , 3.1);
+		wp_enqueue_script( 'my_contactable', $base . 'my.contactable.js', array('jquery') , 3.1);
+		
+		$js_vars = array(
+			'name'            => 'Name',
+			'email'           => 'E-Mail',
+			'message'         => 'Message',
+			'recipient'       => $this->options['recipient_contact'],
+			'subject'         => $this->options['subject_contact'],
+			'label_name'      => $this->options['label_name_contact'],
+			'label_email'     => $this->options['label_email_contact'],
+			'label_website'   => $this->options['label_website_contact'],
+			'label_feedback'  => $this->options['label_feedback_contact'],
+			'label_send'      => $this->options['label_send_contact'],
+			'recievedMsg'     => $this->options['recievedMsg_contact'],
+			'notRecievedMsg'  => $this->options['notRecievedMsg_contact'],
+			'disclaimer'      => $this->options['disclaimer_contact'],
+			'hide_email'      => $this->options['hide_email_contact'] ? 'true' : 'false',
+			'hide_website'    => $this->options['hide_website_contact'] ? 'true' : 'false',
+			'fileMail'        => admin_url('admin-ajax.php'),
+			'side'            => $this->options['side_contact'],
+			'action'          => 'magic_contact_ajax'
+		); 
+		if( is_user_logged_in() ){
+			$js_vars['hide_email'] = 'true';
+			$js_vars['hide_website'] = 'true';
+		}
+		wp_localize_script( 'my_contactable', 'MagicContact', $js_vars );
+		wp_enqueue_style( 'contactable', $base . 'contactable/contactable.css' );
+	}
+	
+	
+	function div_magic_contact(){
+		echo '<div id="mycontactform"> </div>';
+	}
+	
+	function magic_contact_ajax(){
+		if(is_user_logged_in()){
+			$current_user = wp_get_current_user();
+			$_POST['name'] = $current_user->display_name;
+			$_POST['email'] = $current_user->user_email;
+			$_POST['website'] = $current_user->user_url;
+		}
+		$name = esc_attr(trim($_POST['name']));
+		$emailAddr = is_email($_POST['email']) ? $_POST['email']: false;
+		$comment = esc_attr(trim($_POST['comment']));
+		$subject = esc_attr(trim($_POST['subject']));	
+		$website = empty($_POST['website']) ? false : esc_url($_POST['website']);
+		$contactMessage = "Message: $comment\r\nFrom: $name";
+		if($website)
+			$contactMessage .= "\r\nWebsite: $website";
+		if($emailAddr)
+			$contactMessage .= "\r\nReply to: $emailAddr";
+		
+		if(!$emailAddr){
+			echo 'An invalid email address was entered';
+			die();
+		}
+		
+		$send = wp_mail($this->options['recipient_contact'], $subject, $contactMessage);
+		if($send)
+			echo('success');
+		else
+			echo('no send');
+		die();
+	}
 }
 
-// Add action links
-add_action('plugin_action_links_' . plugin_basename(__FILE__), 'AddPluginActions');
-
-function AddPluginActions($links) {
-   $new_links = array();
-
-   $new_links[] = '<a href="options-general.php?page=magic-contact.php">' . __('Settings') . '</a>';
-
-   return array_merge($new_links, $links);
- }
-
-add_action('admin_menu', 'mc_admin_actions');
-
-function mc_admin_actions(){
-  add_options_page("Magic Contact", "Magic Contact", 'manage_options',"magic-contact.php", "magic_contact_menu");
-}
-
-function magic_contact_menu(){   
-  if ( isset($_POST['submit']) ) {
-    if ( function_exists('current_user_can') && !current_user_can('manage_options') )
-  	  die(__('Cheatin&#8217; uh?'));
-  		
-  	update_option( 'recipient_contact', $_POST['recipient_contact'] );
-  	update_option( 'subject_contact', $_POST['subject_contact'] );
-  	
-  	update_option( 'label_name_contact', $_POST['label_name_contact'] );
-    update_option( 'label_email_contact', $_POST['label_email_contact'] );
-    update_option( 'label_website_contact', $_POST['label_website_contact'] );
-    update_option( 'label_feedback_contact', $_POST['label_feedback_contact'] );
-    update_option( 'label_send_contact', $_POST['label_send_contact'] );
-    update_option( 'recievedMsg_contact', $_POST['recievedMsg_contact'] );
-  	update_option( 'notRecievedMsg_contact', $_POST['notRecievedMsg_contact'] );
-  	update_option( 'disclaimer_contact', $_POST['disclaimer_contact'] );
-  	
-  	if ( isset( $_POST['hide_email_contact'] ) ) update_option( 'hide_email_contact', 'true' ); else update_option( 'hide_email_contact', 'false' );
-		if ( isset( $_POST['hide_website_contact'] ) ) update_option( 'hide_website_contact', 'true' ); else update_option( 'hide_website_contact', 'false' );
-    
-    update_option( 'side_contact', $_POST['side_contact'] );
-    
-  }
-  include 'form-admin.php';
-}
-
-add_action('template_redirect', 'script_magic_contact');
-
-function script_magic_contact(){
-
-  $base = WP_PLUGIN_URL.'/'.str_replace(basename( __FILE__),"",plugin_basename(__FILE__)); 
-  
-  wp_enqueue_script( 'jquery.contactable', $base . 'contactable/jquery.contactable.js', array('jquery') , 3.1);
-  wp_enqueue_script( 'jquery.validate', $base . 'contactable/jquery.validate.pack.js', array('jquery') , 3.1);
-  wp_enqueue_script( 'my_contactable', $base . 'my.contactable.php', array('jquery') , 3.1);
-  wp_enqueue_style( 'contactable', $base . 'contactable/contactable.css' );
-  
-}
-
-add_action('wp_footer','div_magic_contact');
-
-function div_magic_contact(){
-  echo '<div id="mycontactform"> </div>';
-}
-
-?>
+$MagicContact = new Magic_Contact();

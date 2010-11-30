@@ -119,10 +119,10 @@
 					if(defaults.hide_website == 'false') website_val = $('#contactForm #website_mc').val();
 					else website_val = 'nothing';
 					comment_val = $('#contactForm #comment_mc').val();
-					$.post(defaults.fileMail,{subject:defaults.subject, name: name_val, email: email_val, website: website_val, comment:comment_val},
+					$.post(defaults.fileMail,{subject:defaults.subject, name: name_val, email: email_val, website: website_val, comment:comment_val, action:defaults.action},
 					function(data){
 						$('#loading').css({display:'none'}); 
-						data = jQuery.trim(data);
+						//data = jQuery.trim(data);
 						if( data == 'success') {
 							$('#callback').show().append(defaults.recievedMsg);
 							if(defaults.hideOnSubmit == true) {

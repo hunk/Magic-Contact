@@ -1,3 +1,9 @@
+<?php
+if((!isset($this) || !is_a($this, 'Magic_Contact')) && (!isset($MagicContact) || !is_a($MagicContact, 'Magic_Contact')))
+	return;
+elseif((!isset($this) || !is_a($this, 'Magic_Contact')))
+	$this &= $MagicContact;
+?>
 <?php if ( !empty($_POST['submit'] ) ) : ?>
   <div id="message" class="updated fade"><p><strong><?php _e('Options saved.') ?></strong></p></div>
 <?php endif; ?>
@@ -5,7 +11,7 @@
 <div class="wrap">
   <h2><?php _e('Magic Contact Configuration'); ?></h2>
   <div class="narrow magic_contact">
-    <form action="" method="post" id="akismet-conf" style="margin: auto; width: 600px; ">
+    <form action="" method="post" id="magic-contact-conf" style="margin: auto; width: 600px; ">
       
       <p><?php printf(__('For the correct operation of Magic Contact is necessary to verify some information')); ?></p>
 
@@ -15,14 +21,14 @@
         <label for="recipient_contact"><?php _e('Recipient of the email'); ?></label>
       </div>
       <div class="contactright">
-        <input id="recipient_contact" name="recipient_contact" type="text" class="magic_contact" value="<?php echo get_option('recipient_contact'); ?>" />
+        <input id="recipient_contact" name="magic_contact[recipient_contact]" type="text" class="magic_contact" value="<?php echo $this->options['recipient_contact']; ?>" />
       </div>
 
       <div class="contactleft">
         <label for="subject_contact"><?php _e('Subject for email'); ?></label>
       </div>
       <div class="contactright">
-        <input id="subject_contact" name="subject_contact" type="text" class="magic_contact" value="<?php echo get_option('subject_contact'); ?>" />
+        <input id="subject_contact" name="magic_contact[subject_contact]" type="text" class="magic_contact" value="<?php echo $this->options['subject_contact']; ?>" />
       </div>
       
       
@@ -35,7 +41,7 @@
       </div>
       
       <div class="contactright">
-        <input id="label_name_contact" name="label_name_contact" type="text" class="magic_contact" value="<?php echo get_option('label_name_contact'); ?>" />
+        <input id="label_name_contact" name="magic_contact[label_name_contact]" type="text" class="magic_contact" value="<?php echo $this->options['label_name_contact']; ?>" />
       </div>
       
       <div class="contactleft">
@@ -43,7 +49,7 @@
       </div>
       
       <div class="contactright">
-        <input id="label_email_contact" name="label_email_contact" type="text" class="magic_contact" value="<?php echo get_option('label_email_contact'); ?>" />
+        <input id="label_email_contact" name="magic_contact[label_email_contact]" type="text" class="magic_contact" value="<?php echo $this->options['label_email_contact']; ?>" />
       </div>
       
       <div class="contactleft">
@@ -51,7 +57,7 @@
       </div>
       
       <div class="contactright">
-        <input id="label_website_contact" name="label_website_contact" type="text" class="magic_contact" value="<?php echo get_option('label_website_contact'); ?>" />
+        <input id="label_website_contact" name="magic_contact[label_website_contact]" type="text" class="magic_contact" value="<?php echo $this->options['label_website_contact']; ?>" />
       </div>
       
       <div class="contactleft">
@@ -59,7 +65,7 @@
       </div>
       
       <div class="contactright">
-        <input id="label_feedback_contact" name="label_feedback_contact" type="text" class="magic_contact" value="<?php echo get_option('label_feedback_contact'); ?>" />
+        <input id="label_feedback_contact" name="magic_contact[label_feedback_contact]" type="text" class="magic_contact" value="<?php echo $this->options['label_feedback_contact']; ?>" />
       </div>
       
       <div class="contactleft">
@@ -67,7 +73,7 @@
       </div>
       
       <div class="contactright">
-        <input id="label_send_contact" name="label_send_contact" type="text" class="magic_contact" value="<?php echo get_option('label_send_contact'); ?>" />
+        <input id="label_send_contact" name="magic_contact[label_send_contact]" type="text" class="magic_contact" value="<?php echo $this->options['label_send_contact']; ?>" />
       </div>
       
       <div class="contactleft">
@@ -75,7 +81,7 @@
       </div>
         
       <div class="contactright">
-        <input id="recievedMsg_contact" name="recievedMsg_contact" type="text" class="magic_contact" value="<?php echo get_option('recievedMsg_contact'); ?>" />
+        <input id="recievedMsg_contact" name="magic_contact[recievedMsg_contact]" type="text" class="magic_contact" value="<?php echo $this->options['recievedMsg_contact']; ?>" />
       </div>
 
       <div class="contactleft">
@@ -83,7 +89,7 @@
       </div>
         
       <div class="contactright">
-        <input id="notRecievedMsg_contact" name="notRecievedMsg_contact" type="text" class="magic_contact" value="<?php echo get_option('notRecievedMsg_contact'); ?>" />
+        <input id="notRecievedMsg_contact" name="magic_contact[notRecievedMsg_contact]" type="text" class="magic_contact" value="<?php echo $this->options['notRecievedMsg_contact']; ?>" />
       </div>
 
       <div class="contactleft">
@@ -91,7 +97,7 @@
       </div>
 
       <div class="contactright">
-        <input id="disclaimer_contact" name="disclaimer_contact" type="text" class="magic_contact" value="<?php echo get_option('disclaimer_contact'); ?>" />
+        <input id="disclaimer_contact" name="magic_contact[disclaimer_contact]" type="text" class="magic_contact" value="<?php echo $this->options['disclaimer_contact']; ?>" />
       </div>
       
       <div class="clear"></div>
@@ -102,7 +108,7 @@
       </div>
 
       <div class="contactright">
-        <input name="hide_email_contact" id="hide_email_contact" value="true" type="checkbox" <?php if ( get_option('hide_email_contact') == 'true' ) echo ' checked="checked" '; ?>
+        <input name="magic_contact[hide_email_contact]" id="hide_email_contact" value="true" type="checkbox" <?php checked($this->options['hide_email_contact']); ?> />
       </div>
       
       <div class="contactleft">
@@ -110,7 +116,7 @@
       </div>
 
       <div class="contactright">
-        <input name="hide_website_contact" id="hide_website_contact" value="true" type="checkbox" <?php if ( get_option('hide_website_contact') == 'true' ) echo ' checked="checked" '; ?>
+        <input name="magic_contact[hide_website_contact]" id="hide_website_contact" value="true" type="checkbox" <?php checked($this->options['hide_website_contact']); ?> />
       </div>
       
       <div class="clear"></div>
@@ -121,9 +127,9 @@
       </div>
       
       <div class="side_contact">
-        <select name="side_contact" id="side_contact" >
-          <option <?php if(get_option('side_contact') == 'left'){ echo 'selected="selected"'; } ?> value="left">Left</option>
-          <option <?php if(get_option('side_contact') == 'right'){ echo 'selected="selected"'; } ?> value="right">Right</option>
+        <select name="magic_contact[side_contact]" id="side_contact" >
+          <option <?php if($this->options['side_contact'] == 'left'){ echo 'selected="selected"'; } ?> value="left">Left</option>
+          <option <?php if($this->options['side_contact'] == 'right'){ echo 'selected="selected"'; } ?> value="right">Right</option>
         </select>
       </div>
       
