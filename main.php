@@ -175,8 +175,8 @@ class Magic_Contact {
 			echo 'An invalid email address was entered';
 			die();
 		}
-		
-		$send = wp_mail($this->options['recipient_contact'], $subject, $contactMessage);
+		$headers = 'From: '.$name.' <'.$emailAddr.'>' . \\"\r\n\\";
+		$send = wp_mail($this->options['recipient_contact'], $subject, $contactMessage,$headers);
 		if($send)
 			echo('success');
 		else
