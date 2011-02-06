@@ -12,8 +12,17 @@
 //extend the plugin
 (function($){
 
+
+  if (window.location.hash) {
+    if(window.location.hash == '#contact'){
+      	setTimeout(function(){$("body").prepend('<div class="m-overlay"></div>');$('div#contactable').click();},1000);
+      	
+    }
+  }
+  
+  
 	//define the new for the plugin ans how to call it	
-	$.fn.contactable = function(options) {
+	$.fn.contactable = function(options) { 
 		//set default options  
 		var defaults = {
 			name: 'Name',
@@ -61,8 +70,10 @@
 			  $('#callback').hide().empty();
 			  $('.holder').show();
 				$('#loading').hide();
-			  
-			  
+				
+			  if ($('div.m-overlay').length == 0) {
+			    $("body").prepend('<div class="m-overlay"></div>');
+		    }
 				$('#overlay').css({display: 'block'});
 				if(defaults.side == "right"){
 				  $(this).animate({"marginRight": "-=5px"}, "fast"); 
@@ -76,7 +87,7 @@
   				$('#contactForm').animate({"marginLeft": "+=390px"}, "slow");
 		    }
 			}, 
-			function() {
+			function() { $('div.m-overlay').remove();
 			  if(defaults.side == "right"){
 				  $('#contactForm').animate({"marginRight": "-=390px"}, "slow");
 				  $(this).animate({"marginRight": "-=387px"}, "slow").animate({"marginRight": "+=5px"}, "fast"); 
@@ -145,4 +156,10 @@
 			});
 		});
 	};
+	$(document).ready(function(){
+    $('a[href=#contact]').click(function(){
+        $('div#contactable').click();
+    });
+  });
 })(jQuery);
+

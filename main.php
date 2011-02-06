@@ -162,21 +162,34 @@ class Magic_Contact {
 		}
 		$name = esc_attr(trim($_POST['name']));
 		$emailAddr = is_email($_POST['email']) ? $_POST['email']: false;
-		$comment = esc_attr(trim($_POST['comment']));
+		$comment = nl2br(esc_attr(trim($_POST['comment'])));
 		$subject = esc_attr(trim($_POST['subject']));	
 		$website = empty($_POST['website']) ? false : esc_url($_POST['website']);
-		$contactMessage = "Message: $comment\r\nFrom: $name";
+			  $contactMessage .= sprintf("<div>From: %s</div>",$name);
 		if($website)
-			$contactMessage .= "\r\nWebsite: $website";
+			$contactMessage .= sprintf("<div>Website: %s</div>",$website);
 		if($emailAddr)
-			$contactMessage .= "\r\nReply to: $emailAddr";
+			$contactMessage .= sprintf("<div>Reply to: %s</div>",$emailAddr);
 		
 		if(!$emailAddr){
 			echo 'An invalid email address was entered';
 			die();
 		}
-		$headers = 'From: '.$name.' <'.$emailAddr.'>' . \\"\r\n\\";
-		$send = wp_mail($this->options['recipient_contact'], $subject, $contactMessage,$headers);
+		//add referer
+		if(isset($_SERVER["HTTP_REFERER"])){
+		  $contactMessage .= sprintf("<div>On page: %s</div>",$_SERVER["HTTP_REFERER"]);
+	  }
+	  $contactMessage .= sprintf("<div>Message: %s</div>",$comment);
+		
+		$contactMessage = sprintf('<div>%s</div>',$contactMessage);
+		
+		$headers = array(
+		  sprintf("From: %s <%s>",$name,$emailAddr),
+    	"Content-Type: text/html"
+    );
+    $h = implode("\r\n",$headers) . "\r\n";
+		
+		$send = wp_mail($this->options['recipient_contact'], $subject, $contactMessage,$h);
 		if($send)
 			echo('success');
 		else
