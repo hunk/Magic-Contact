@@ -160,6 +160,9 @@
     $('a[href=#contact]').click(function(){
         $('div#contactable').click();
     });
+    $('.m-overlay').live('click',function(){
+      $('div#contactable').click();
+    });
   });
 })(jQuery);
 

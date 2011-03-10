@@ -148,6 +148,9 @@ form#contactForm #loading {
 /* overlay */
 .m-overlay {
 background: black !important;
+/* for IE */
+filter:alpha(opacity=60);
+/* CSS3 standard */
 opacity: 0.6;
 position:fixed;
 top: 0pt;
