@@ -124,7 +124,6 @@ class Magic_Contact {
 			'name'            => 'Name',
 			'email'           => 'E-Mail',
 			'message'         => 'Message',
-			'recipient'       => $this->options['recipient_contact'],
 			'subject'         => $this->options['subject_contact'],
 			'label_name'      => $this->options['label_name_contact'],
 			'label_email'     => $this->options['label_email_contact'],
